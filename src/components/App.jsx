@@ -1,13 +1,23 @@
 import Editor from './Editor'
+import Counter from './Counter'
 import { javascript } from '@codemirror/lang-javascript';
 import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { useEffect, useState } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { FaHtml5, FaTrash } from 'react-icons/fa';
+import { FaHtml5, FaPause, FaPlay, FaStop, FaTrash } from 'react-icons/fa';
 import { FaCss3 } from 'react-icons/fa';
 import { FaJs } from 'react-icons/fa';
 import { FaFileExport } from 'react-icons/fa';
+import popdown from '../assets/sounds/pop-down.mp3'
+import popupon from '../assets/sounds/pop-up-on.mp3'
+import popupoff from '../assets/sounds/pop-up-off.mp3'
+import disable from '../assets/sounds/disable-sound.mp3'
+
+
+
+import useSound from 'use-sound';
+
 
 
 // import { FaHtml5 } from 'react-icons/fa';
@@ -23,6 +33,13 @@ function App() {
   const [cssCode, setCss] =  useLocalStorage('css', '');
   const [jsCode, setJs] =  useLocalStorage('js', '');
   const [srcDoc, setSrcDoc] = useState('')
+  const [time, setTime] = useState();
+  const [isRunning, setIsRunning] = useState(false);
+  const [clearOnEnd, setClearOnEnd] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [autoDestroy, setAutoDestroy] = useState(false);
+
+
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -40,6 +57,7 @@ function App() {
     return () => clearTimeout(timeout)
   }, [htmlCode, cssCode, jsCode])
   
+
 
   const handleExport = () => {
     // Generate the HTML file content
@@ -80,13 +98,117 @@ function App() {
     setJs('');
   }
 
+  const handleStart = () => {
+    setTime(parseInt(inputValue, 10));
+    setIsRunning(true);
+    // setClearOnEnd(e.target.checked);
+  };
+
+  const handleStop = () => {
+    setIsRunning(false);
+    // setClearOnEnd(e.target.checked);
+  };
+
+  const [playpop] = useSound(
+    disable,
+      { volume: 1 }
+    );
+
+  const handleTimerEnd = () => {
+    setIsRunning(false);
+    setInputValue("");
+    playpop();
+    if(autoDestroy){
+  setHtml('');
+      setCss('');
+      setJs('');
+
+    }
+    
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleCheck = (e) => {
+    setAutoDestroy(e.target.checked);
+    
+  };
+
+  useEffect(() => {
+    if (time === 0 && autoDestroy) {
+      setInputValue("");
+    }
+  }, [time, autoDestroy]);
+
+
+  const [playActive] = useSound(
+    popdown,
+    { volume: 0.25 }
+  );
+  const [playOn] = useSound(
+    popupon,
+    { volume: 0.25 }
+  );
+  const [playOff] = useSound(
+    popupoff,
+    { volume: 0.25 }
+  );
+
+
+
   return (
     <>
     <div className="container">
       <div className="export-container">
+        <div className="timer">
+        <label htmlFor="input">Timer:</label>
+      <input
+        type="text"
+        id="input"
+        value={inputValue}
+        onChange={handleInputChange}
+      />
+
+      <input
+        type="checkbox"
+        id="autodestroy"
+        checked={autoDestroy}
+        onChange={handleCheck}
+        onMouseDown={playActive}
+      onMouseUp={() => {
+        autoDestroy ? playOff() : playOn();
+      }}
+
+      />
+      <label htmlFor="autodestroy">Autodestroy</label>
+
+      {!isRunning ? (
+        <button onClick={handleStart} disabled={!inputValue}>
+          <FaPlay/>
+        </button>
+      ) : (
+<button onClick={handleStop}>
+          <FaStop/>
+        </button>
+      )}
+    
+        </div>
+        {isRunning && (
+        <Counter
+          initialTime={time}
+          onTimerEnd={handleTimerEnd}
+          clearOnEnd={clearOnEnd}
+          setInputValue={setInputValue}
+
+        />
+      )}
+        <div className="export">
 
     <button onClick={handleExport}><FaFileExport className='icon'/> Export</button>
     <button onClick={handleDelete}><FaTrash className='icon'/> Clear All</button>
+        </div>
 
       </div>
         <div className='pane top-pane'>
