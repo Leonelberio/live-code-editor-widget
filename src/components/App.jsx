@@ -4,7 +4,12 @@ import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { useEffect, useState } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-import {faCode } from '@fortawesome/free-solid-svg-icons'
+import { FaHtml5 } from 'react-icons/fa';
+import { FaCss3 } from 'react-icons/fa';
+import { FaJs } from 'react-icons/fa';
+
+// import { FaHtml5 } from 'react-icons/fa';
+
 
 
 
@@ -36,15 +41,18 @@ function App() {
 
   return (
     <>
+    <div className="container">
+
         <div className='pane top-pane'>
-          <Editor language={html()} displayName="HTML" value={htmlCode} handleChange={setHtml} icon={faCode}/>
-          <Editor language={css()} displayName="CSS" value={cssCode} handleChange={setCss}/>
-          <Editor language={[javascript({ jsx: true })]} displayName="Javascript" value={jsCode} handleChange={setJs}/>
+          <Editor language={html()} displayName="HTML" value={htmlCode} handleChange={setHtml} brand={<FaHtml5/>}/>
+          <Editor language={css()} displayName="CSS" value={cssCode} handleChange={setCss} brand={<FaCss3/>}/>
+          <Editor language={[javascript({ jsx: true })]} displayName="Javascript" value={jsCode} handleChange={setJs} brand={<FaJs/>}/>
         </div>
         <div className='pane'>
           <iframe title='output' sandbox='allow-scripts' frameBorder="0" width="100%" height="100%" srcDoc={srcDoc}>
           </iframe>
         </div>
+    </div>
     </>
   )
 }

@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import CodeMirror from '@uiw/react-codemirror';
 import { githubDark } from '@uiw/codemirror-theme-github';
 // import { historyField } from '@codemirror/commands';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCompressAlt, faExpandAlt, faCode } from '@fortawesome/free-solid-svg-icons'
+import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 function Editor(props) {
@@ -12,7 +12,7 @@ const {
     displayName,
     value,
     handleChange,
-    icon
+    brand
 } = props;
 const [open, setOpen] = useState(true)
 
@@ -23,7 +23,7 @@ const onChange = React.useCallback((value, viewUpdate) => {
 return (
 <div className={`editor-container ${open ? '' : 'collapsed'}`}>
     <div className="editor-title">
-    <FontAwesomeIcon icon={icon} /> {displayName}
+    {brand} {displayName}
     <button
           type="button"
           className="expand-collapse-btn"
@@ -40,8 +40,6 @@ return (
   extensions={language}
   onChange={onChange}
   className="code-mirror-wrapper"
-
- 
 />
 </div>
 
