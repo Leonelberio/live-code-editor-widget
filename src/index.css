@@ -11,8 +11,6 @@ body {
   background-color: hsl(225, 6%, 25%);
 }
 
-
-
 .pane {
   height: 50vh;
   display: flex;
@@ -27,6 +25,29 @@ body {
   background-color: hsl(225, 6%, 25%);
 }
 
+@media only screen and (max-width: 750px) {
+  .pane{
+    height: 70vh;
+    flex-direction: column;
+  }
+
+  .code-mirror-wrapper {
+    flex-grow: 0;
+    border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+    overflow: hidden;
+  }
+  .editor-container{
+    padding: .25rem;
+    max-height: 31%;
+  }
+  /* .code-mirror-wrapper {
+    flex-grow: 1;
+    border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+    overflow: hidden;
+  } */
+}
 .editor-container.collapsed {
   flex-grow: 0;
 }
@@ -65,6 +86,7 @@ iframe{
 }
 
 .code-mirror-wrapper {
+
   flex-grow: 1;
   border-bottom-right-radius: .5rem;
   border-bottom-left-radius: .5rem;
