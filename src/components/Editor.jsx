@@ -24,6 +24,7 @@ return (
 <div className={`editor-container ${open ? '' : 'collapsed'}`}>
     <div className="editor-title">
     {brand} {displayName}
+    
     <button
           type="button"
           className="expand-collapse-btn"

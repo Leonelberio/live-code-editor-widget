@@ -25,6 +25,27 @@ body {
   background-color: hsl(225, 6%, 25%);
 }
 
+.export-container{
+display: flex;
+justify-content: end;
+padding: .5rem;
+}
+
+.export-container>button{
+  background: none;
+  border-style: none;
+  color: white;
+  display: flex;
+gap: 5px;
+font-size: small;
+cursor: pointer;
+}
+
+.export-container>button>.icon{
+font-size: .9rem;
+
+}
+
 @media only screen and (max-width: 750px) {
   .pane{
     height: 70vh;
