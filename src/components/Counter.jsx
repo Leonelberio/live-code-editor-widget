@@ -34,7 +34,7 @@ function Counter({ initialTime, onTimerEnd, clearOnEnd, setInputValue }) {
   useEffect(() => {
     if (time <= 10) {
         play();
-  document.getElementById("count").style.color = "red";
+  document.getElementById("count").style.background = "red";
     }
   }, [time]);
 

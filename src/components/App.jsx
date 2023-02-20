@@ -158,6 +158,8 @@ function App() {
       <div className="export-container">
         
         <div className="timer">
+          <div className="inputcontainer">
+
         <label htmlFor="input">Timer: </label>
       <input
         type="text"
@@ -165,6 +167,7 @@ function App() {
         value={inputValue}
         onChange={handleInputChange}
       />
+          </div>
 
 <div class="checkbox-wrapper-13">
 
@@ -193,6 +196,8 @@ function App() {
         </button>
       )}
         </div>
+
+
         {isRunning && (
         <Counter
           initialTime={time}
@@ -204,10 +209,12 @@ function App() {
         <div className="export">
 
     <button onClick={handleExport} className="button"><FaFileExport className='icon'/> Export</button>
-    <button onClick={handleDelete} className="button"><FaTrash className='icon'/> Clear All</button>
+    <button onClick={handleDelete} className="button" style={{color: "red"}}><FaTrash className='icon'/> Clear All</button>
         </div>
 
       </div>
+
+
         <div className='pane top-pane'>
           <Editor language={html()} displayName="HTML" value={htmlCode} handleChange={setHtml} brand={<FaHtml5/>}/>
           <Editor language={css()} displayName="CSS" value={cssCode} handleChange={setCss} brand={<FaCss3/>}/>
