@@ -16,15 +16,15 @@ const {
 } = props;
 const [open, setOpen] = useState(true)
 
-const onChange = React.useCallback((value, viewUpdate) => {
+const  onChange =  React.useCallback( (value, viewUpdate) => {
         handleChange(value);
+        // console.log('value:', value);
       }, []);
 
 return (
 <div className={`editor-container ${open ? '' : 'collapsed'}`}>
     <div className="editor-title">
-    {brand} {displayName}
-    
+      {brand} {displayName}  
     <button
           type="button"
           className="expand-collapse-btn"

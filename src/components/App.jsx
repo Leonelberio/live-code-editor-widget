@@ -5,7 +5,7 @@ import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { useEffect, useState } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { FaHtml5, FaPause, FaPlay, FaStop, FaTrash } from 'react-icons/fa';
+import { FaHtml5, FaPlay, FaStop, FaTrash } from 'react-icons/fa';
 import { FaCss3 } from 'react-icons/fa';
 import { FaJs } from 'react-icons/fa';
 import { FaFileExport } from 'react-icons/fa';
@@ -119,10 +119,9 @@ function App() {
     setInputValue("");
     playpop();
     if(autoDestroy){
-  setHtml('');
+      setHtml('');
       setCss('');
       setJs('');
-
     }
     
   };
@@ -136,11 +135,6 @@ function App() {
     
   };
 
-  useEffect(() => {
-    if (time === 0 && autoDestroy) {
-      setInputValue("");
-    }
-  }, [time, autoDestroy]);
 
 
   const [playActive] = useSound(
@@ -162,8 +156,9 @@ function App() {
     <>
     <div className="container">
       <div className="export-container">
+        
         <div className="timer">
-        <label htmlFor="input">Timer:</label>
+        <label htmlFor="input">Timer: </label>
       <input
         type="text"
         id="input"
@@ -171,29 +166,32 @@ function App() {
         onChange={handleInputChange}
       />
 
+<div class="checkbox-wrapper-13">
+
       <input
         type="checkbox"
-        id="autodestroy"
+        id="c1-13"
         checked={autoDestroy}
         onChange={handleCheck}
         onMouseDown={playActive}
-      onMouseUp={() => {
+        onMouseUp={() => {
         autoDestroy ? playOff() : playOn();
       }}
 
       />
-      <label htmlFor="autodestroy">Autodestroy</label>
+      <label htmlFor="c1-13">Autodestroy</label>
+</div>
 
+    
       {!isRunning ? (
-        <button onClick={handleStart} disabled={!inputValue}>
+        <button onClick={handleStart} disabled={!inputValue} className="playstopbutton">
           <FaPlay/>
         </button>
       ) : (
-<button onClick={handleStop}>
+<button onClick={handleStop} className="playstopbutton" >
           <FaStop/>
         </button>
       )}
-    
         </div>
         {isRunning && (
         <Counter
@@ -201,13 +199,12 @@ function App() {
           onTimerEnd={handleTimerEnd}
           clearOnEnd={clearOnEnd}
           setInputValue={setInputValue}
-
         />
       )}
         <div className="export">
 
-    <button onClick={handleExport}><FaFileExport className='icon'/> Export</button>
-    <button onClick={handleDelete}><FaTrash className='icon'/> Clear All</button>
+    <button onClick={handleExport} className="button"><FaFileExport className='icon'/> Export</button>
+    <button onClick={handleDelete} className="button"><FaTrash className='icon'/> Clear All</button>
         </div>
 
       </div>
@@ -217,8 +214,7 @@ function App() {
           <Editor language={[javascript({ jsx: true })]} displayName="Javascript" value={jsCode} handleChange={setJs} brand={<FaJs/>}/>
         </div>
         <div className='pane'>
-          <iframe title='output' sandbox='allow-scripts' frameBorder="0" width="100%" height="100%" srcDoc={srcDoc}>
-          </iframe>
+          <iframe title='output' sandbox='allow-scripts' frameBorder="0" width="100%" height="100%" srcDoc={srcDoc}/>
         </div>
     </div>
     </>

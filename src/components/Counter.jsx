@@ -9,7 +9,6 @@ function Counter({ initialTime, onTimerEnd, clearOnEnd, setInputValue }) {
 
   useEffect(() => {
     let timer;
-
     if (time > 0) {
       timer = setTimeout(() => {
         setTime((prevTime) => prevTime - 1);
@@ -18,16 +17,13 @@ function Counter({ initialTime, onTimerEnd, clearOnEnd, setInputValue }) {
       onTimerEnd();
       if (clearOnEnd) {
         setInputValue("");
-        
       }
       
     }
-
-
     return () => {
       clearTimeout(timer);
     };
-  }, [time, onTimerEnd, clearOnEnd, setInputValue]);
+  }, [time]);
 
 
   const [play] = useSound(
@@ -42,7 +38,7 @@ function Counter({ initialTime, onTimerEnd, clearOnEnd, setInputValue }) {
     }
   }, [time]);
 
-  return <div id="count">Time left: {time}</div>;
+  return <div id="count">Time left : {time} secondes</div>;
 }
 
 export default Counter;
